@@ -1109,7 +1109,14 @@ static void apsd_update_work(struct work_struct *work)
 			break;
 		}
 
-		if (cm->rp_lvl != RP_22K_CUR_LVL && (chip->chg_type == STANDARD_HOST ||
+		/*
+		 * Give D+/D- back to the USB PHY for a PC port whatever the Rp
+		 * level; keep them only while the wireless charger detection
+		 * re-runs APSD. With the cable in at boot this pass comes after
+		 * the first pull-up, with the port already in device mode, and
+		 * nothing else clears the BC1.1 switch until a replug.
+		 */
+		if (!rerun_apsd_status && (chip->chg_type == STANDARD_HOST ||
 					chip->chg_type == CHARGING_HOST))
 			smb1351_set_usbsw_state(chip, USBSW_USB);
 
