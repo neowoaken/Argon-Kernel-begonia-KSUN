@@ -1,18 +1,60 @@
-Linux kernel
-============
+# Argon Kernel for Redmi Note 8 Pro (begonia)
 
-This file was moved to Documentation/admin-guide/README.rst
+Linux 4.14.357 kernel with KernelSU-Next for the Xiaomi Redmi Note 8 Pro
+(begonia / begoniain, MediaTek Helio G90T / MT6785).
 
-Please notice that there are several guides for kernel developers and users.
-These guides can be rendered in a number of formats, like HTML and PDF.
+```
++======================================================
+| A R G O N   K E R N E L
+| Linux 4.14.357 . KernelSU-Next . begonia / MT6785
+| KernelSU-Next manager v3.4.2
+| built by @edis22ovner on XDA
+| with the help of DeepSeek V4.1 Flash Free
++======================================================
+```
 
-In order to build the documentation, use ``make htmldocs`` or
-``make pdfdocs``.
+## What this is
 
-There are various text files in the Documentation/ subdirectory,
-several of them using the Restructured Text markup notation.
-See Documentation/00-INDEX for a list of what is contained in each file.
+- Based on [krispgece/kernel_xiaomi_mt6785](https://github.com/krispgece/kernel_xiaomi_mt6785)
+- KernelSU-Next 33314 (legacy branch, UAPI 5), pairs with manager v3.4.2
+- Manual in-tree hooks (execve, faccessat, stat, read, input, reboot), `CONFIG_KPROBES` off
+- Stock vermagic (`4.14.357-openela-PoWeR`) kept so vendor modules keep loading;
+  only the display name changes to `-Argon`
+- BBR + fq, BFQ available, zram LZ4, HZ 250, `-O3`
+- Deliberately conservative: LSE atomics, DEBUG_FS, SW_SYNC and
+  SCHED_DEBUG/SCHEDSTATS stay off
 
-Please read the Documentation/process/changes.rst file, as it contains the
-requirements for building and running the kernel, and information about
-the problems which may result by upgrading your kernel.
+## Download
+
+Flashable AnyKernel3 ZIP: see [Releases](../../releases).
+Check the SHA-256 against the one in the release notes before flashing.
+
+## Branches
+
+| Branch | Contents |
+|--------|----------|
+| `argon` | The Argon Kernel source (use this one) |
+| `main`  | Upstream base, unmodified |
+
+Release `v1.0.0` was built from commit `940a707`.
+
+## Building
+
+```
+[toolchain: which clang/gcc and version]
+[defconfig name]
+[build command]
+```
+
+## Status
+
+Tested on Project Infinity X (Android 16). Android 11 and 14 ROMs are untested.
+
+## Credits
+
+KernelSU-Next team, krispgece and the upstream mt6785 kernel maintainers,
+AnyKernel3, DeepSeek V4.1 Flash Free (AI assistance).
+
+## License
+
+GPL-2.0, same as the Linux kernel. See `COPYING`.
