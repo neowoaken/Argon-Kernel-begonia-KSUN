@@ -1883,11 +1883,29 @@ out_ret:
 	return retval;
 }
 
+#ifdef CONFIG_KSU
+/*
+ * KernelSU-Next manual hooks.
+ *  - ksud:     hijacks the first /system/bin/app_process exec to start ksud
+ *  - sucompat: rewrites exec of /system/bin/su into KernelSU's own su
+ * struct user_arg_ptr is local to this file, so declare the prototypes here.
+ */
+extern int ksu_handle_execveat_ksud(int *fd, struct filename **filename_ptr,
+				    struct user_arg_ptr *argv,
+				    struct user_arg_ptr *envp, int *flags);
+extern int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr,
+					void *argv, void *envp, int *flags);
+#endif
+
 static int do_execveat_common(int fd, struct filename *filename,
 			      struct user_arg_ptr argv,
 			      struct user_arg_ptr envp,
 			      int flags)
 {
+#ifdef CONFIG_KSU
+	ksu_handle_execveat_ksud(&fd, &filename, &argv, &envp, &flags);
+	ksu_handle_execveat_sucompat(&fd, &filename, NULL, NULL, NULL);
+#endif
 	return __do_execve_file(fd, filename, argv, envp, flags, NULL);
 }
 

@@ -560,6 +560,19 @@ asmlinkage __visible void __init start_kernel(void)
 	boot_cpu_init();
 	page_address_init();
 	pr_notice("%s", linux_banner);
+
+	pr_info("\n");
+	pr_info("    _    ____   ____   ___  _   _\n");
+	pr_info("   / \\  |  _ \\ / ___| / _ \\| \\ | |\n");
+	pr_info("  / _ \\ | |_) | |  _ | | | |  \\| |\n");
+	pr_info(" / ___ \\|  _ <| |_| | |_| | |\\  |\n");
+	pr_info("/_/   \\_\\_| \\_\\\\____|\\___/|_| \\_|\n");
+	pr_info("        A R G O N   K E R N E L\n");
+	pr_info("  begonia | MT6785 | Linux 4.14.357\n");
+	pr_info("  KernelSU-Next legacy (manual hooks)\n");
+	pr_info("  KernelSU-Next manager v3.4.2\n");
+	pr_info("  built by @edis22ovner on XDA\n");
+	pr_info("  with the help of DeepSeek V4.1 Flash Free\n\n");
 	setup_arch(&command_line);
 	mm_init_cpumask(&init_mm);
 	setup_command_line(command_line);
